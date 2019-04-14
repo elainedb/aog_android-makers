@@ -69,7 +69,12 @@ object Presenter {
                 .addSuggestions(suggestions(locale))
             1 -> {
                 responseBuilder
-                    .add("${getStringResource("session_found", locale)} ${sessions[0].title} (${sessions[0].getTimeSlot()}) ${sessions[0].getShortDescription()}")
+                    .add(
+                        "${getStringResource(
+                            "session_found",
+                            locale
+                        )} ${sessions[0].title} (${sessions[0].getTimeSlot()}) ${sessions[0].getShortDescription()}"
+                    )
                     .addSuggestions(suggestions(locale))
             }
             else -> {

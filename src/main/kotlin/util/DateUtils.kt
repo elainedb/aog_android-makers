@@ -25,7 +25,7 @@ object DateUtils {
 
     private fun nowWithLocale() = formatWithParisTimeZone(Date(), FIREBASE_PATTERN, Locale.FRANCE)
 
-    fun formatWithParisTimeZone(date: Date, format: String, locale: Locale) : String {
+    fun formatWithParisTimeZone(date: Date, format: String, locale: Locale): String {
         val formatter = SimpleDateFormat(format, locale)
         formatter.timeZone = TimeZone.getTimeZone("Europe/Paris")
         return formatter.format(date)
