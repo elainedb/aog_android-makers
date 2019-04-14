@@ -1,3 +1,4 @@
+import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.util.concurrent.ExecutionException
 import java.util.stream.Collectors
@@ -5,7 +6,6 @@ import javax.servlet.annotation.WebServlet
 import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import org.slf4j.LoggerFactory
 
 /**
  * Handles request received via HTTP POST and delegates it to your Actions app. See: [Request
@@ -24,7 +24,7 @@ class ActionsServlet : HttpServlet() {
         try {
             val jsonResponse = actionsApp.handleRequest(body, getHeadersMap(req)).get()
             LOG.info("Generated json = {}", jsonResponse)
-            res.contentType = "application/json"
+            res.contentType = "application/json;charset=UTF-8"
             writeResponse(res, jsonResponse)
         } catch (e: InterruptedException) {
             handleError(res, e)
