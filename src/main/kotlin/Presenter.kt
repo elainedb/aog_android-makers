@@ -34,27 +34,27 @@ object Presenter {
 
     fun getSessionsByFilterResponse(
         responseBuilder: ResponseBuilder,
-        customTime: String, language: String, level: String, time: String
+        customTime: String, language: String, level: String, time: String, locale: Locale
     ): ResponseBuilder {
 
         val sessions = getSessionsByFilter(customTime, language, level, time)
 
         when (sessions.size) {
             0 -> responseBuilder
-                .add(getStringResource("no_sessions_found"))
+                .add(getStringResource("no_sessions_found", locale))
                 .addSuggestions(
                     arrayOf(
-                        getStringResource("suggestion_1"),
-                        getStringResource("suggestion_2"),
-                        getStringResource("suggestion_3"),
-                        getStringResource("suggestion_4")
+                        getStringResource("suggestion_1", locale),
+                        getStringResource("suggestion_2", locale),
+                        getStringResource("suggestion_3", locale),
+                        getStringResource("suggestion_4", locale)
                     )
                 )
             1 -> responseBuilder
-                .add(getStringResource("session_found"))
+                .add(getStringResource("session_found", locale))
                 .add(sessions[0].title)
             else -> responseBuilder
-                .add(getStringResource("sessions_found"))
+                .add(getStringResource("sessions_found", locale))
                 .add(sessions.joinToString { it.title })
         }
 //        responseBuilder.add("LAla")
@@ -62,8 +62,8 @@ object Presenter {
         return responseBuilder
     }
 
-    private fun getStringResource(key: String): String {
-        return ResourceBundle.getBundle("resources").getFormattedString(key)
+    private fun getStringResource(key: String, locale: Locale): String {
+        return ResourceBundle.getBundle("resources", locale).getFormattedString(key)
     }
 
     private val LOG = LoggerFactory.getLogger(Presenter::class.java)
