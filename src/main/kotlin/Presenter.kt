@@ -1,5 +1,3 @@
-import Interactor.getSessions
-import Interactor.getSlots
 import com.google.actions.api.response.ResponseBuilder
 import com.google.actions.api.response.helperintent.SelectionList
 import com.google.api.services.actions_fulfillment.v2.model.LinkOutSuggestion
@@ -32,8 +30,8 @@ object Presenter {
 
         LOG.info("getSessionsByFilter 2 $targetTime, $queryType, $sessionLanguage, $sessionLevel")
 
-        val okSlots = getSlots(queryType, targetTime)
-        return getSessions(okSlots, sessionLanguage, sessionLevel)
+        val okSlots = Interactor.getSlots(queryType, targetTime)
+        return Interactor.getSessions(okSlots, sessionLanguage, sessionLevel)
     }
 
     fun getSessionsByFilterSimpleResponse(
