@@ -1,9 +1,9 @@
 import extensions.QueryType
+import extensions.deleteOneMinute
+import extensions.isOKForCurrentSessions
+import extensions.isOKForNextSessions
 import model.*
 import util.DateUtils
-import util.deleteOneMinute
-import util.isOKForCurrentSessions
-import util.isOKForNextSessions
 import java.util.*
 
 object Interactor {

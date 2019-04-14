@@ -44,19 +44,36 @@ class AndroidMakersApp : DialogflowApp() {
         val responseBuilder = when {
             request.hasCapability(Capability.WEB_BROWSER.value) -> {
                 // Phone
-                Presenter.getSessionsByFilterResponse(getResponseBuilder(request), customTime, language, level, time, locale)
+                Presenter.getSessionsByFilterListResponse(getResponseBuilder(request), customTime, language, level, time, locale)
             }
             request.hasCapability(Capability.SCREEN_OUTPUT.value) -> {
                 // Home Hub
-                Presenter.getSessionsByFilterResponse(getResponseBuilder(request), customTime, language, level, time, locale)
+                Presenter.getSessionsByFilterListResponse(getResponseBuilder(request), customTime, language, level, time, locale)
             }
             else -> {
                 // Home
-                Presenter.getSessionsByFilterResponse(getResponseBuilder(request), customTime, language, level, time, locale)
+                Presenter.getSessionsByFilterSimpleResponse(getResponseBuilder(request), customTime, language, level, time, locale)
             }
         }
 
         LOGGER.info("sessionsByFilter intent end.")
+        return responseBuilder.build()
+    }
+
+    @ForIntent("sessions.byfilter - custom")
+    fun sessionsByFilterOption(request: ActionRequest): ActionResponse {
+        LOGGER.info("sessionsByFilterOption intent start.")
+
+        val locale = Locale(request.locale.language)
+
+        LOGGER.info("request.locale = ${request.locale.language}")
+
+        val responseBuilder = Presenter.getSessionsByFilterOptionResponse(
+            getResponseBuilder(request),
+            locale,
+            request.getSelectedOption() ?: "")
+
+        LOGGER.info("sessionsByFilterOption intent end.")
         return responseBuilder.build()
     }
 
