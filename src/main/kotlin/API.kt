@@ -22,7 +22,7 @@ object API {
             val credentials = GoogleCredentials.fromStream(serviceAccount)
             val options = FirebaseOptions.Builder()
                 .setCredentials(credentials)
-                .setProjectId("android-makers-2019")
+                .setProjectId("your-project-id")
                 .setThreadManager(BasicScalingThreadManager())
                 .build()
             FirebaseApp.initializeApp(options)
