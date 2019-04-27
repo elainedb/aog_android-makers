@@ -5,9 +5,7 @@ import com.google.api.services.actions_fulfillment.v2.model.ListSelectListItem
 import com.google.api.services.actions_fulfillment.v2.model.OpenUrlAction
 import com.google.api.services.actions_fulfillment.v2.model.OptionInfo
 import extensions.*
-import model.Language
-import model.Level
-import model.Session
+import model.*
 import org.slf4j.LoggerFactory
 import util.DateUtils
 import java.util.*
@@ -16,14 +14,14 @@ object Presenter {
 
     fun getSessionsByFilter(customTime: String, language: String, level: String, time: String): List<Session> {
         var queryType = QueryType.CURRENT_SESSIONS // custom time: "next" "current"
-        var targetTime = DateUtils.fakeNow() // time: sys.time
+        var targetTime = DateUtils.now() // time: sys.time
         var sessionLanguage: Language? = null // language: sys.language
         var sessionLevel: Level? = null // level: "Beginner" "Intermediate" "Expert"
 
         LOG.info("getSessionsByFilter 1 $customTime, $language, $level, $time")
 
         // comment this line if developing in an "exotic" timezone (BRT for instance :D)
-        if (time.isNotBlank()) targetTime = DateUtils.dateParseFR(time).adjust()
+        if (time.isNotBlank()) targetTime = DateUtils.dateParseActionsArgFR(time).adjust()
         if (customTime.isNotBlank()) queryType = customTime.toQueryType()
         if (language.isNotBlank()) sessionLanguage = language.toLanguage()
         if (level.isNotBlank()) sessionLevel = level.toLevel()
@@ -113,7 +111,8 @@ object Presenter {
         getStringResource("suggestion_1", locale),
         getStringResource("suggestion_2", locale),
         getStringResource("suggestion_3", locale),
-        getStringResource("suggestion_4", locale)
+        getStringResource("suggestion_4", locale),
+        getStringResource("suggestion_5", locale)
     )
 
     private fun getStringResource(key: String, locale: Locale): String {

@@ -32,9 +32,9 @@ fun Date.deleteOneMinute(): Date {
     return cal.time
 }
 
-fun Date.isOKForCurrentSessions(start: Date, end: Date) = start.before(this) && end.after(this)
+fun Date.isOKForCurrentSessions(start: Date, end: Date) = start.deleteOneMinute().before(this) && end.after(this)
 
-fun Date.isOKForNextSessions(start: Date, end: Date) = start.after(this) && end.before(this.addTwoHours())
+fun Date.isOKForNextSessions(start: Date, end: Date) = start.after(this.deleteOneMinute()) && end.before(this.addTwoHours())
 
 fun Date.printDayHour() = DateUtils.formatWithParisTimeZone(this, PRINT_PATTERN_WITH_DAY, Locale.FRANCE)
 

@@ -1,6 +1,9 @@
 package model
 
 import com.squareup.moshi.JsonClass
+import extensions.getShortString
+import extensions.printDayHour
+import extensions.printHour
 import util.DateUtils
 import java.util.*
 
@@ -40,6 +43,10 @@ fun SessionJson.toSession(id: String, start: String, end: String): Session {
         DateUtils.dateParseFR(end)
     )
 }
+
+fun Session.getTimeSlot() = this.start.printDayHour() + " - " + this.end.printHour()
+
+fun Session.getShortDescription() = description.getShortString()
 
 fun getSessionLevel(label: String) = when (label) {
     "Beginner" -> Level.BEGINNER

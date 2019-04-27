@@ -1,5 +1,4 @@
 import extensions.QueryType
-import extensions.deleteOneMinute
 import extensions.isOKForCurrentSessions
 import extensions.isOKForNextSessions
 import model.*
@@ -12,16 +11,16 @@ object Interactor {
         val slots = API.getSlotsPOJO()
 
         var okSlots = listOf<ScheduleSlot>()
-        val targetTime = targetTimeArg.deleteOneMinute()
 
         slots?.let {
             okSlots = slots.filter {
                 val startDate = DateUtils.dateParseFR(it.startDate)
                 val endDate = DateUtils.dateParseFR(it.endDate)
                 val okForCurrentSessions =
-                    queryType == QueryType.CURRENT_SESSIONS && targetTime.isOKForCurrentSessions(startDate, endDate)
+                    queryType == QueryType.CURRENT_SESSIONS && targetTimeArg.isOKForCurrentSessions(startDate, endDate)
                 val okForNextSessions =
-                    queryType == QueryType.NEXT_SESSIONS && targetTime.isOKForNextSessions(startDate, endDate)
+                    queryType == QueryType.NEXT_SESSIONS && targetTimeArg.isOKForNextSessions(startDate, endDate)
+                println("startDate $startDate endDate $endDate")
                 okForCurrentSessions || okForNextSessions
             }
 

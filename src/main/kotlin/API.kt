@@ -1,24 +1,13 @@
-import com.google.auth.oauth2.GoogleCredentials
-import com.google.cloud.firestore.Firestore
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
-import com.google.firebase.ThreadManager
-import com.google.firebase.cloud.FirestoreClient
-import com.google.firebase.internal.NonNull
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import model.ScheduleSlot
-import model.ScheduleSlotList
 import model.SessionJson
-import java.io.File
-import java.io.FileInputStream
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.concurrent.*
 
 object API {
-    val moshi = Moshi.Builder().build()
+    private val moshi = Moshi.Builder().build()
 
     private fun getContents(url: String):String? {
         val connection = URL(url).openConnection() as HttpURLConnection
