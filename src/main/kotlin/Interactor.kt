@@ -15,7 +15,7 @@ object Interactor {
         val targetTime = targetTimeArg.deleteOneMinute()
 
         slots?.let {
-            okSlots = slots.all.filter {
+            okSlots = slots.filter {
                 val startDate = DateUtils.dateParseFR(it.startDate)
                 val endDate = DateUtils.dateParseFR(it.endDate)
                 val okForCurrentSessions =
@@ -34,7 +34,7 @@ object Interactor {
     }
 
     fun getSessions(okSlots: List<ScheduleSlot>, sessionLanguage: Language?, sessionLevel: Level?): List<Session> {
-        val sessions = API.getSessionsPOJO()
+        val sessions = API.getSessionsPOJO() ?: emptyMap()
 
         var okSessions = sessions
             .filterKeys { okSlots.map { slot -> slot.sessionId }.contains(it) }

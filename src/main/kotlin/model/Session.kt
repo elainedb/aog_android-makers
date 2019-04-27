@@ -1,8 +1,10 @@
 package model
 
+import com.squareup.moshi.JsonClass
 import util.DateUtils
 import java.util.*
 
+@JsonClass(generateAdapter = true)
 data class SessionJson(
     val complexity: String = "",
     val speakers: List<String> = listOf(),
