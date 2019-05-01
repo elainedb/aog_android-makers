@@ -41,7 +41,7 @@ object DateUtils {
 
     fun fakeNow() = dateParseFR(fakeNowString)
 
-    const val fakeNowString = "2019-04-23T11:30:00+0000"
+    const val fakeNowString = "2019-04-23T11:30:00+00:00"
 
 // TODO https://stackoverflow.com/questions/2891361/how-to-set-time-zone-of-a-java-util-date
     //https://stackoverflow.com/questions/4542679/java-time-zone-when-parsing-dateformat
