@@ -1,4 +1,5 @@
-import com.google.cloud.tools.gradle.appengine.standard.AppEngineStandardExtension
+import com.google.cloud.tools.gradle.appengine.appyaml.AppEngineAppYamlExtension
+import org.akhikhl.gretty.GrettyExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -7,7 +8,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.google.cloud.tools:appengine-gradle-plugin:1.3.5")
+        classpath("com.google.cloud.tools:appengine-gradle-plugin:2.0.0-rc6")
+        classpath("org.akhikhl.gretty:gretty:+")
     }
 }
 
@@ -21,7 +23,8 @@ plugins {
 }
 
 apply {
-    plugin("com.google.cloud.tools.appengine")
+    plugin("com.google.cloud.tools.appengine-appyaml")
+    plugin("org.akhikhl.gretty")
 }
 
 repositories {
@@ -42,14 +45,21 @@ dependencies {
     testImplementation("junit:junit:4.12")
 }
 
+the<GrettyExtension>().let {
+    it.httpPort = 8080
+    it.contextPath = "/"
+    it.servletContainer = "jetty9" // What App Engine Flexible uses
+}
+
+//
 // Since we apply the app engine after the plugins {} block, we cannot rely on type-safe accessors
 // See https://github.com/GoogleCloudPlatform/app-gradle-plugin/issues/191
-the<AppEngineStandardExtension>().deploy {
+the<AppEngineAppYamlExtension>().deploy {
+    projectId = "your-project-id"
+    version = "1-0-0"
     stopPreviousVersion = true
     promote = true
 }
-
-version = "1.0"
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
